@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorator="template" >
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>Votre Banque</title>
+
+    <link href="../static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="../static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="../static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+
+<div class="right_col" role="main"layout:fragment="content">
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2><i class="fa fa-bars"></i> Detail de Compte </h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                        <li type="button" class="btn btn-default" ><a th:text="Retour" th:href="@{/comptes}"><i class="fa fa-chevron-circle-left"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Operations</a>
+                            </li>
+                            <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Client</a>
+                            </li>
+                            <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Compte</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                                <table id="datatable" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Numero</th>
+                                        <th>Date de l'operation </th>
+                                        <th>Montant </th>
+                                        <th>Type </th>
+
+                                    </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                    <tr th:each="c:${listOperation}">
+                                        <td th:text="${c.numero}"></td>
+                                        <td th:text="${c.dateOperation}"></td>
+                                        <td th:text="${c.montant}"></td>
+                                        <td th:text="${c.class.simpleName}"></td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <nav>
+
+                                    <ul class="pagination">
+                                        <li th:class="${currentPage==status.index}?'active':''"
+                                            th:each="page,status:${pages}"><a th:text="${status.index}"
+                                                                              th:href="@{/detailCompte(code=${compte.code},page=${status.index})}"> </a></li>
+                                    </ul>
+                                </nav>
+
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Code:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.client.code}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Nom</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.client.nom}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Prenom</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.client.prenom}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>email</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.client.email}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Code:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.code}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Solde:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.solde}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Date de Creation:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.dateCreation}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title">
+                                    <div class="title_left">
+                                        <h5>Type de compte:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.class.simpleName}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title" th:if="${compte.class.simpleName} =='CompteCourant'">
+                                    <div class="title_left">
+                                        <h5>Decouvert:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.decouvert}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="page-title" th:if="${compte.class.simpleName} =='CompteEpargne'">
+                                    <div class="title_left">
+                                        <h5>Taux:</h5>
+                                    </div>
+                                    <div class="title_right">
+                                        <h5 th:text="${compte.taux}"></h5>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <div class="col-md-3"></div>
+    </div>
+</div>
+</body>
+</html>
